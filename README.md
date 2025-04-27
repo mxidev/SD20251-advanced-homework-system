@@ -28,3 +28,45 @@ SD20251-advanced-homework-system/
     ├── Dockerfile
     └── main.go
 ```
+
+# Instrucciones para ejecutar el proyecto
+
+Es posible que requiera instalar rabbit en su sistema (Linux):
+```
+sudo apt install rabbitmq-server
+```
+
+1. Clonar el repositorio:
+```
+git clone https://github.com/mxidev/SD20251-advanced-homework-system.git
+cd SD20251-advanced-homework-system
+```
+
+2. Compilar protocol buffers para client y server:
+```
+cd client/proto
+protoc --go_out=. --go-grpc_out=. ./homework.proto
+
+cd ../../server/proto
+protoc --go_out=. --go-grpc_out=. ./homework.proto
+```
+
+3. Inicializar modulo Go en cada entidad
+```
+go mod init <nombre_entidad>
+go mod tidy
+```
+
+Por ejemplo, para client:
+```
+cd client
+go mod init client
+go mod tidy
+```
+
+4. Ejecutar cada entidad por separado en distintas terminales:
+```
+make docker-client -> Levanta un contenedor Docker para el cliente
+make docker-server -> Levanta un contenedor Docker para el servidor
+make run-worker -> Ejecuta el codigo GO asociado a la entidad del worker
+```
