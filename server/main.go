@@ -5,7 +5,7 @@ import (
 	"log"
 	"net"
 
-	pb "homework-system/proto"
+	pb "server/proto/homework-system/proto"
 
 	"github.com/streadway/amqp"
 
@@ -14,7 +14,7 @@ import (
 
 type server struct {
 	pb.UnimplementedHomeworkServiceServer
-	ch amqp.Channel
+	ch *amqp.Channel
 	q  amqp.Queue
 }
 
@@ -35,7 +35,7 @@ func main() {
 
 	lis, _ := net.Listen("tcp", ":50051")
 	s := grpc.NewServer()
-	pb.RegisterHomeworkServiceServer(s, &server{ch: *ch, q: q})
+	pb.RegisterHomeworkServiceServer(s, &server{ch: ch, q: q})
 	log.Println("🎓 Servidor gRPC escuchando en :50051")
 	s.Serve(lis)
 }

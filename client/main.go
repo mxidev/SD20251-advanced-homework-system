@@ -5,7 +5,7 @@ import (
 	"log"
 	"time"
 
-	pb "homework-system/proto"
+	pb "client/proto/homework-system/proto"
 
 	"google.golang.org/grpc"
 )
