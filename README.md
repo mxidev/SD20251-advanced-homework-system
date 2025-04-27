@@ -14,7 +14,7 @@ Este proyecto simula un sistema donde los estudiantes pueden enviar tareas, y lo
 ### Estructura del proyecto:
 
 ```
-homework-system/
+SD20251-advanced-homework-system/
 ├── docker-compose.yaml
 ├── Makefile
 ├── proto/

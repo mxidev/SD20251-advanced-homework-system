@@ -1,0 +1,25 @@
+version: "3.8"
+
+services:
+  rabbitmq:
+    image: rabbitmq:3-management
+    container_name: rabbitmq
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+
+  server:
+    build:
+      context: ./server
+    depends_on:
+      - rabbitmq
+    ports:
+      - "50051:50051"
+    container_name: grpc-server
+
+  worker:
+    build:
+      context: ./worker
+    depends_on:
+      - rabbitmq
+    container_name: teacher-worker
