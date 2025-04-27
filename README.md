@@ -66,7 +66,7 @@ go mod tidy
 
 4. Ejecutar cada entidad por separado en distintas terminales:
 ```
-make docker-client -> Levanta un contenedor Docker para el cliente
+make run-client -> Ejecuta el codigo GO asociado a la entidad del cliente
 make docker-server -> Levanta un contenedor Docker para el servidor
-make run-worker -> Ejecuta el codigo GO asociado a la entidad del worker
+make docker-worker -> Levanta un contenedor Docker para el worker
 ```
