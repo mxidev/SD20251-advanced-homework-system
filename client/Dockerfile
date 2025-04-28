@@ -5,6 +5,6 @@ WORKDIR /app
 COPY . .
 
 RUN go mod tidy
-RUN go build -o worker .
+RUN go build -o client .
 
-CMD ["./worker"]
+CMD ["./client"]

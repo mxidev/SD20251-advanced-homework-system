@@ -11,17 +11,33 @@ import (
 )
 
 func main() {
-	conn, _ := grpc.Dial("localhost:50051", grpc.WithInsecure())
+	conn, err := grpc.Dial("server-container:50051", grpc.WithInsecure())
+	if err != nil {
+		log.Fatalf("❌ No se pudo conectar al servidor gRPC: %v", err)
+	}
 	defer conn.Close()
 	c := pb.NewHomeworkServiceClient(conn)
 
 	ctx, cancel := context.WithTimeout(context.Background(), time.Second)
 	defer cancel()
 
-	resp, _ := c.SubmitHomework(ctx, &pb.HomeworkRequest{
-		StudentName: "Maxi",
-		Title:       "Informe de estructuras de datos",
-	})
+	tasks := []string{
+		"Informe de Estructuras de Datos",
+		"Proyecto de Redes de Computadores",
+		"Certamen de Computacion Cientifica",
+		"Tarea de Algoritmos",
+		"Entrega MVP para Feria",
+	}
 
-	log.Printf("✅ Servidor respondió: %s", resp.Status)
+	for _, task := range tasks {
+		resp, err := c.SubmitHomework(ctx, &pb.HomeworkRequest{
+			StudentName: "Tralalero Tralala",
+			Title:       task,
+		})
+		if err != nil {
+			log.Printf("❌ Error al enviar tarea '%s': %v", task, err)
+			continue
+		}
+		log.Printf("✅ Servidor respondió: %s", resp.Status)
+	}
 }

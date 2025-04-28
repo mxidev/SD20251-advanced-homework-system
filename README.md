@@ -17,13 +17,23 @@ Este proyecto simula un sistema donde los estudiantes pueden enviar tareas, y lo
 SD20251-advanced-homework-system/
 ├── docker-compose.yaml
 ├── Makefile
-├── proto/
-│   └── homework.proto
 ├── client/
 │   └── main.go
+    └──proto/
+        └── homework.proto
+        └── homework-system/
+            └── proto/
+                └── homework_grpc.pb.go
+                └── homework.pb.go
 ├── server/
 │   ├── Dockerfile
 │   └── main.go
+    └──proto/
+        └── homework.proto
+        └── homework-system/
+            └── proto/
+                └── homework_grpc.pb.go
+                └── homework.pb.go
 └── worker/
     ├── Dockerfile
     └── main.go
@@ -64,9 +74,14 @@ go mod init client
 go mod tidy
 ```
 
-4. Ejecutar cada entidad por separado en distintas terminales:
+4. Ejecutar cada entidad en este orden por separado (distintas terminales):
 ```
-make run-client -> Ejecuta el codigo GO asociado a la entidad del cliente
-make docker-server -> Levanta un contenedor Docker para el servidor
 make docker-worker -> Levanta un contenedor Docker para el worker
+make docker-server -> Levanta un contenedor Docker para el servidor
+make docker-client -> Levanta un contenedor Docker para el client
+```
+
+5. Por buenas practicas, se sugiere limpiar los contenedores con el comando:
+```
+make docker-turnoff
 ```

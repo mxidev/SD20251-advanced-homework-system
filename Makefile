@@ -1,9 +1,16 @@
-PROTO_DIR=proto
-PROTO_FILES=$(wildcard $(PROTO_DIR)/*.proto)
-OUT_DIR=proto
+# Dockerizar server
+docker-server: 
+	sudo docker-compose up --build server 
 
-proto:
-	protoc --go_out=$(OUT_DIR) --go-grpc_out=$(OUT_DIR) --go_opt=paths=source_relative --go-grpc_opt=paths=source_relative $(PROTO_FILES)
+# Dockerizar worker
+docker-worker:
+	sudo docker-compose up --build worker
 
-clean:
-	rm -f $(OUT_DIR)/*.pb.go
+# Dockerizar client
+docker-client:
+	sudo docker-compose up --build client
+
+# Parar todo
+docker-turnoff:
+	@echo "🛑 Parando toda la infraestructura..."
+	sudo docker-compose down
